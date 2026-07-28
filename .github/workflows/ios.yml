@@ -1,0 +1,17 @@
+name: iOS Archive
+# Opt-in only: no macOS runner is in the fleet yet, so this would queue forever
+# on push. See README "Building for iOS".
+on:
+  workflow_dispatch:
+jobs:
+  archive:
+    runs-on: [self-hosted, macos, arm64, xcode]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen generate
+      - run: |
+          xcodebuild -project *.xcodeproj -scheme "HanzoChat" \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/app.xcarchive archive

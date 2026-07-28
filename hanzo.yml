@@ -1,0 +1,4 @@
+# What CI runs. Only steps a Linux arc runner can genuinely execute —
+# the macOS archive lives in .github/workflows/ios.yml. See README.
+test:
+  - { name: parse, run: "swiftc -parse -swift-version 6 $(find Sources Tests -name '*.swift')" }
